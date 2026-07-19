@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&#12365;&#12425;&#12427;&#12435;&#26085;&#35352;</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+<main class="app">
+
+  <!-- 導入画面 -->
+  <section id="introScreen" class="screen active ui-image-screen">
+    <img
+      src="images/intro.png"
+      alt="&#12399;&#12376;&#12417;&#12414;&#12375;&#12390;&#12289;&#12431;&#12383;&#12375;&#12399;&#12365;&#12425;&#12427;&#12435;"
+      class="screen-ui-image"
+    />
+
+    <button
+      id="introTapBtn"
+      class="hotspot intro-next"
+      type="button"
+      aria-label="&#27425;&#12408;"
+      style="position:absolute; inset:0; width:100%; height:100%; z-index:9999; background:transparent; border:0;"
+    ></button>
+  </section>
+
+  <!-- 感情選択画面 -->
+  <section id="emotionScreen" class="screen ui-image-screen">
+    <img
+      src="images/emotion.png"
+      alt="&#20170;&#26085;&#12399;&#12393;&#12435;&#12394;&#27671;&#25345;&#12385;&#12384;&#12387;&#12383;&#65311;"
+      class="screen-ui-image"
+    />
+
+    <button
+      class="emotion-card hotspot emotion-hit emotion-happy"
+      data-emotion="happy"
+      type="button"
+      aria-label="&#23305;&#12375;&#12356;"
+    ></button>
+
+    <button
+      class="emotion-card hotspot emotion-hit emotion-angry"
+      data-emotion="angry"
+      type="button"
+      aria-label="&#24594;&#12387;&#12390;&#12427;"
+    ></button>
+
+    <button
+      class="emotion-card hotspot emotion-hit emotion-sad"
+      data-emotion="sad"
+      type="button"
+      aria-label="&#24754;&#12375;&#12356;"
+    ></button>
+
+    <button
+      class="emotion-card hotspot emotion-hit emotion-normal"
+      data-emotion="normal"
+      type="button"
+      aria-label="&#26222;&#36890;"
+    ></button>
+
+    <button
+      id="emotionNextBtn"
+      class="hotspot emotion-next"
+      type="button"
+      aria-label="&#27425;&#12408;"
+      disabled
+    ></button>
+  </section>
+
+  <!-- 入力方法選択 -->
+  <section id="inputMethodScreen" class="screen">
+    <div class="screen-inner method-screen-inner">
+
+      <div class="method-star">&#9733;</div>
+
+      <div class="method-title-pill">
+        &#20170;&#26085;&#12399;&#12393;&#12435;&#12394;&#26085;&#12384;&#12387;&#12383;&#65311;
+      </div>
+
+      <div class="method-label">
+        &#12393;&#12385;&#12425;&#12391;&#26360;&#12367;&#12363;&#36984;&#12435;&#12391;&#12397;
+      </div>
+
+      <div class="method-list">
+        <button class="method-card" data-method="text" type="button">
+          <span class="method-circle">
+            <span class="method-icon"></span>
+          </span>
+          <span class="method-name">&#20837;&#21147;</span>
+        </button>
+
+        <button class="method-card" data-method="camera" type="button">
+          <span class="method-circle">
+            <span class="method-icon"></span>
+          </span>
+          <span class="method-name">&#12459;&#12513;&#12521;</span>
+        </button>
+      </div>
+
+      <button id="methodNextBtn" class="primary-btn" disabled>
+        &#27425;&#12408;
+      </button>
+
+    </div>
+  </section>
+
+  <!-- 日記入力 -->
+  <section id="diaryInputScreen" class="screen">
+    <div class="screen-inner diary-screen-inner">
+
+      <div class="diary-star">&#9733;</div>
+
+      <div class="diary-title-pill">
+        &#20170;&#26085;&#12399;&#12393;&#12435;&#12394;&#26085;&#12384;&#12387;&#12383;&#65311;
+      </div>
+
+      <div class="diary-card">
+        <textarea
+          id="diaryText"
+          class="diary-textarea"
+          placeholder="&#25991;&#23383;&#12434;&#20837;&#21147;"
+        ></textarea>
+
+        <div class="diary-tools">
+          <button class="tool-btn" type="button">&#20889;&#30495;</button>
+          <button class="tool-btn" type="button">&#12522;&#12531;&#12463;</button>
+        </div>
+      </div>
+
+      <button id="diaryNextBtn" class="primary-btn">
+        &#27425;&#12408;
+      </button>
+
+    </div>
+  </section>
+  <!-- カメラ入力 -->
+  <section id="cameraScreen" class="screen">
+    <div class="camera-screen">
+
+      <div class="camera-frame">
+        <input
+          id="cameraInput"
+          class="camera-input"
+          type="file"
+          accept="image/*"
+          capture="environment"
+        />
+
+        <button id="openCameraBtn" class="camera-open-btn" type="button">
+          &#12459;&#12513;&#12521;&#12391;&#26085;&#35352;&#12434;&#25774;&#12427;
+        </button>
+
+        <img
+          id="cameraPreview"
+          class="camera-preview hidden"
+          alt="&#25774;&#24433;&#12375;&#12383;&#26085;&#35352;"
+        />
+
+        <p id="cameraGuideText" class="camera-note">
+          &#25163;&#26360;&#12365;&#12398;&#26085;&#35352;&#12434;&#25774;&#24433;&#12375;&#12390;&#12397;
+        </p>
+      </div>
+
+      <div class="camera-controls">
+        <button class="round-btn" data-next="inputMethodScreen" type="button">
+          &#25147;&#12427;
+        </button>
+
+        <button id="retakePhotoBtn" class="round-btn" type="button">
+          &#25774;&#12426;&#30452;&#12377;
+        </button>
+
+        <button id="photoOkBtn" class="round-btn" type="button">
+          OK
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OCR修正画面 -->
+  <section id="ocrEditScreen" class="screen">
+    <div class="screen-inner">
+
+      <div class="top-star">&#9733;</div>
+
+      <h1 class="main-title">
+        &#35501;&#12415;&#21462;&#12387;&#12383;&#25991;&#31456;&#12434;&#30452;&#12375;&#12390;&#12397;
+      </h1>
+
+      <div class="diary-card">
+        <textarea
+          id="ocrText"
+          class="diary-textarea"
+          placeholder="&#25774;&#24433;&#12375;&#12383;&#26085;&#35352;&#12434;&#35211;&#12394;&#12364;&#12425;&#12289;&#12371;&#12371;&#12395;&#25991;&#23383;&#12434;&#20837;&#21147;&#12375;&#12390;&#12397;"
+        ></textarea>
+      </div>
+
+      <button id="ocrNextBtn" class="primary-btn">
+        &#27425;&#12408;
+      </button>
+
+    </div>
+  </section>
+
+  <!-- 公開する一文選択 -->
+  <section id="quoteSelectScreen" class="screen">
+    <div class="screen-inner quote-screen-inner">
+
+      <div class="quote-title-pill">
+        &#19968;&#30058;&#22909;&#12365;&#12394;&#25991;&#31456;&#12434;&#12394;&#12382;&#12429;&#12358;
+      </div>
+
+      <div class="quote-note-card">
+        <div id="selectableText" class="selectable-text"></div>
+      </div>
+
+      <div class="quote-selected-wrap">
+        <p class="quote-selected-label">
+          &#36984;&#12435;&#12384;&#25991;&#31456;&#8251;&#20844;&#38283;&#12373;&#12428;&#12414;&#12377;
+        </p>
+
+        <div class="selected-box quote-selected-box">
+          <p id="selectedQuote" class="selected-quote">
+            &#12414;&#12384;&#36984;&#12400;&#12428;&#12390;&#12356;&#12414;&#12379;&#12435;
+          </p>
+
+          <p id="quoteCount" class="quote-count">
+            0 / 140&#23383;
+          </p>
+        </div>
+      </div>
+
+      <button id="quoteNextBtn" class="primary-btn" disabled>
+        &#27425;&#12408;
+      </button>
+
+    </div>
+  </section>
+
+  <!-- AI分析画面 -->
+  <section id="analysisScreen" class="screen">
+    <div class="sky-screen analysis-sky">
+
+      <div class="analysis-panel">
+
+        <div id="analysisQuote" class="analysis-quote-pill">
+          &#36984;&#12435;&#12384;&#35328;&#33865;
+        </div>
+
+        <div id="analysisMainStar" class="analysis-main-star">
+          &#9733;
+        </div>
+
+        <p class="analysis-caption">
+          &#26085;&#35352;&#12363;&#12425;&#20998;&#26512;&#12375;&#12383;&#12354;&#12394;&#12383;&#12398;&#27671;&#25345;&#12385;
+        </p>
+
+        <div class="analysis-list">
+
+          <div class="analysis-item">
+            <div class="analysis-left">
+              <span class="analysis-star happy">&#9733;</span>
+              <span class="analysis-label">&#23305;&#12375;&#12356;</span>
+            </div>
+            <div class="bar">
+              <div id="happyBar" class="bar-fill happy-fill"></div>
+            </div>
+            <strong id="happyScore">0%</strong>
+          </div>
+
+          <div class="analysis-item">
+            <div class="analysis-left">
+              <span class="analysis-star angry">&#9733;</span>
+              <span class="analysis-label">&#24594;&#12387;&#12390;&#12427;</span>
+            </div>
+            <div class="bar">
+              <div id="angryBar" class="bar-fill angry-fill"></div>
+            </div>
+            <strong id="angryScore">0%</strong>
+          </div>
+
+          <div class="analysis-item">
+            <div class="analysis-left">
+              <span class="analysis-star sad">&#9733;</span>
+              <span class="analysis-label">&#24754;&#12375;&#12356;</span>
+            </div>
+            <div class="bar">
+              <div id="sadBar" class="bar-fill sad-fill"></div>
+            </div>
+            <strong id="sadScore">0%</strong>
+          </div>
+
+          <div class="analysis-item">
+            <div class="analysis-left">
+              <span class="analysis-star original">&#9733;</span>
+              <span id="originalEmotionLabel" class="analysis-label">
+                &#35328;&#33865;&#12395;&#12375;&#12383;&#12356;&#27671;&#25345;&#12385;
+              </span>
+            </div>
+            <div class="bar">
+              <div id="originalBar" class="bar-fill original-fill"></div>
+            </div>
+            <strong id="originalScore">0%</strong>
+          </div>
+
+        </div>
+
+        <button id="flyStarBtn" class="analysis-fly-btn primary-btn" type="button">
+          &#26143;&#12434;&#39131;&#12400;&#12377;
+        </button>
+
+      </div>
+    </div>
+  </section>
+  <!-- 星を飛ばす説明 -->
+  <section id="tutorialScreen" class="screen">
+    <div class="sky-screen tutorial-sky">
+
+      <div class="my-star tutorial-my-star">&#9733;</div>
+
+      <div class="other-star tutorial-other-star tutorial-other-large large-a pink">&#9733;</div>
+      <div class="other-star tutorial-other-star tutorial-other-large large-b purple">&#9733;</div>
+
+      <div class="other-star tutorial-other-star tutorial-other-small small-a blue">&#9733;</div>
+      <div class="other-star tutorial-other-star tutorial-other-small small-b green">&#9733;</div>
+      <div class="other-star tutorial-other-star tutorial-other-small small-c red">&#9733;</div>
+
+      <div id="tutorialOverlay" class="dark-overlay hidden"></div>
+
+      <div id="tutorialText" class="tutorial-text">
+        &#12354;&#12394;&#12383;&#12398;&#26143;&#12364;&#31354;&#12408;&#39131;&#12435;&#12384;&#12424;
+      </div>
+
+      <button id="tutorialNextBtn" class="primary-btn tutorial-btn" type="button">
+        &#27425;&#12408;
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ホーム星空 -->
+  <section id="skyHomeScreen" class="screen">
+    <div class="sky-screen home-sky">
+
+      <button id="myStar" class="my-star home-my-star" type="button">
+        &#9733;
+      </button>
+
+      <svg id="homeConstellationLines" class="constellation-lines"></svg>
+
+      <div id="otherStarsLayer"></div>
+
+      <div id="starInfoCard" class="star-info-card hidden">
+        <p class="selected-label">
+          &#12371;&#12398;&#26143;&#12364;&#36984;&#12435;&#12384;&#35328;&#33865;
+        </p>
+
+        <p id="otherStarText" class="star-public-text"></p>
+
+        <button id="talkRequestBtn" class="primary-btn small" type="button">
+          &#21939;&#12387;&#12390;&#12415;&#12383;&#12356;
+        </button>
+      </div>
+
+      <div id="homeBar" class="home-bar">
+        <button id="homeToggleBtn" class="home-toggle" type="button">
+          &#9733;
+        </button>
+
+        <div class="home-menu">
+          <button id="connectionBtn" type="button">
+            &#12388;&#12394;&#12364;&#12426;
+          </button>
+
+          <button id="pastDiaryBtn" type="button">
+            &#36942;&#21435;&#12398;&#26085;&#35352;
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- つながり画面 -->
+  <section id="connectionScreen" class="screen">
+    <div class="screen-inner">
+
+      <button class="back-btn" data-next="skyHomeScreen" type="button">
+        &#8592;
+      </button>
+
+      <h1 class="main-title">
+        &#12388;&#12394;&#12364;&#12426;
+      </h1>
+
+      <p class="lead-text">
+        &#26143;&#12434;&#36984;&#12406;&#12392;&#12488;&#12540;&#12463;&#12395;&#36914;&#12417;&#12427;&#12424;
+      </p>
+
+      <div id="matchList" class="match-list"></div>
+
+    </div>
+  </section>
+
+  <!-- トーク画面 -->
+  <section id="chatScreen" class="screen">
+    <div class="chat-screen kirarun-chat-screen">
+
+      <header class="chat-topbar">
+        <button class="back-btn chat-back-btn" data-next="connectionScreen" type="button">
+          &#8592;
+        </button>
+
+        <div class="chat-topbar-text">
+          <h1>&#12488;&#12540;&#12463;</h1>
+          <p id="chatPartnerText">
+            &#12300;&#30456;&#25163;&#12398;&#19968;&#25991;&#12301;
+          </p>
+        </div>
+      </header>
+
+      <div class="kirarun-chat-hero">
+
+        <div class="kirarun-topic-bubble">
+          <p class="kirarun-topic-label">
+            &#20108;&#20154;&#12395;&#12399;&#12371;&#12435;&#12394;&#35441;&#38988;&#12364;&#12362;&#12377;&#12377;&#12417;&#12384;&#12424;
+          </p>
+
+          <div id="topicSuggestion" class="kirarun-topic-box">
+            &#35441;&#38988;&#12434;&#32771;&#12360;&#12390;&#12356;&#12427;&#12424;
+          </div>
+        </div>
+
+        <img
+          src="images/kirarun-chat.png"
+          alt="&#12365;&#12425;&#12427;&#12435;"
+          class="kirarun-chat-image"
+        />
+
+        <div class="partner-first-bubble">
+          <span class="partner-star">&#9733;</span>
+          <span id="partnerHelloText">
+            &#12399;&#12376;&#12417;&#12414;&#12375;&#12390;
+          </span>
+        </div>
+
+      </div>
+
+      <div id="messageList" class="message-list kirarun-message-list"></div>
+
+      <form id="messageForm" class="message-form kirarun-message-form">
+        <input
+          id="messageInput"
+          type="text"
+          placeholder="&#12513;&#12483;&#12475;&#12540;&#12472;&#12434;&#20837;&#21147;"
+        />
+
+        <button type="submit">
+          &#36865;&#20449;
+        </button>
+      </form>
+
+    </div>
+  </section>
+  <!-- 過去の日記 -->
+  <section id="pastDiaryScreen" class="screen">
+    <div class="past-calendar-screen">
+
+      <button class="back-btn past-back" data-next="skyHomeScreen" type="button">
+        &#8592;
+      </button>
+
+      <div class="past-calendar-header">
+        <button
+          id="prevMonthBtn"
+          class="month-nav-btn prev-month"
+          type="button"
+          aria-label="&#21069;&#12398;&#26376;"
+        ></button>
+
+        <div class="past-calendar-title-wrap">
+          <h1 id="pastMonthTitle" class="past-month-title">
+            2026&#24180;7&#26376;
+          </h1>
+
+          <p class="past-month-sub">
+            &#26376;&#12372;&#12392;&#12398;&#26143;&#24231;&#26085;&#35352;
+          </p>
+        </div>
+
+        <button
+          id="nextMonthBtn"
+          class="month-nav-btn next-month"
+          type="button"
+          aria-label="&#27425;&#12398;&#26376;"
+        ></button>
+      </div>
+
+      <div class="past-weekdays">
+        <div>&#26085;</div>
+        <div>&#26376;</div>
+        <div>&#28779;</div>
+        <div>&#27700;</div>
+        <div>&#26408;</div>
+        <div>&#37329;</div>
+        <div>&#22303;</div>
+      </div>
+
+      <div id="pastCalendarWrap" class="past-calendar-wrap">
+        <svg id="pastConstellationLines" class="constellation-lines"></svg>
+        <div id="pastCalendarGrid" class="past-calendar-grid"></div>
+      </div>
+
+      <p class="past-month-count">
+        &#20170;&#26376;&#12398;&#26143; <span id="pastMonthEntryCount">0</span> &#20491;
+      </p>
+
+      <div class="past-legend">
+        <span>
+          <i class="legend-star pink">&#9733;</i>
+          &#23305;&#12375;&#12356;
+        </span>
+
+        <span>
+          <i class="legend-star red">&#9733;</i>
+          &#24594;&#12387;&#12390;&#12427;
+        </span>
+
+        <span>
+          <i class="legend-star blue">&#9733;</i>
+          &#24754;&#12375;&#12356;
+        </span>
+
+        <span>
+          <i class="legend-star green">&#9733;</i>
+          &#26222;&#36890;
+        </span>
+      </div>
+
+      <div id="pastDiaryCard" class="past-diary-preview hidden">
+        <p id="pastDiaryDate" class="past-diary-date">
+          2026.7.12
+        </p>
+
+        <p id="pastDiaryMeta" class="past-diary-meta">
+          20:14 / &#23305;&#12375;&#12356;
+        </p>
+
+        <p id="pastDiaryQuote" class="past-diary-quote">
+          &#12300;&#20844;&#38283;&#12375;&#12383;&#19968;&#25991;&#12301;
+        </p>
+
+        <button id="readDiaryBtn" class="primary-btn small" type="button">
+          &#26085;&#35352;&#12434;&#35501;&#12416;
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 日記詳細 -->
+  <section id="diaryDetailScreen" class="screen">
+    <div class="screen-inner">
+
+      <button class="back-btn" data-next="pastDiaryScreen" type="button">
+        &#8592;
+      </button>
+
+      <h1 id="detailDate" class="main-title">
+        &#26085;&#35352;&#35443;&#32048;
+      </h1>
+
+      <div class="selected-box">
+        <p class="selected-label">
+          &#20844;&#38283;&#12375;&#12383;&#19968;&#25991;
+        </p>
+
+        <p id="detailQuote" class="selected-quote"></p>
+      </div>
+
+      <div class="diary-detail-card">
+        <p class="selected-label">
+          &#26085;&#35352;
+        </p>
+
+        <p id="detailDiaryText"></p>
+      </div>
+
+      <div class="kirarun-help">
+        <div class="mini-kirarun">&#9733;</div>
+
+        <div>
+          <p class="selected-label">
+            &#12365;&#12425;&#12427;&#12435;&#12424;&#12426;
+          </p>
+
+          <p id="detailKirarunComment">
+            &#12371;&#12398;&#26085;&#12398;&#27671;&#25345;&#12385;&#12434;&#25391;&#12426;&#36820;&#12387;&#12390;&#12415;&#12424;&#12358;
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
