@@ -9,13 +9,13 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  overflow: hidden;
   background: #cfc0e5;
   font-family:
     "Hiragino Maru Gothic ProN",
@@ -89,7 +89,6 @@ button {
   line-height: 1.7;
   text-align: center;
 }
-
 .primary-btn {
   display: block;
   width: 210px;
@@ -129,6 +128,7 @@ button {
   font-weight: 900;
   box-shadow: 0 8px 18px rgba(100, 70, 110, 0.12);
 }
+
 body.theme-happy {
   --theme-main: #ff6fa8;
   --theme-sub: #ffd2e9;
@@ -168,7 +168,6 @@ body.theme-normal {
   --theme-soft: #9beb96;
   --theme-pale: #f1fff0;
 }
-
 .pink {
   color: #ff6fa8;
 }
@@ -236,6 +235,8 @@ body.theme-normal {
   height: 100% !important;
   background: transparent !important;
 }
+
+/* 感情選択の透明ボタン */
 #emotionScreen .emotion-card {
   position: absolute !important;
   z-index: 40;
@@ -246,7 +247,6 @@ body.theme-normal {
   box-shadow: none !important;
 }
 
-/* 感情選択の押せる範囲 */
 #emotionScreen .emotion-happy {
   left: 2%;
   top: 20%;
@@ -274,7 +274,6 @@ body.theme-normal {
 #emotionNextBtn {
   display: none !important;
 }
-
 #inputMethodScreen,
 #diaryInputScreen,
 #ocrEditScreen,
@@ -331,6 +330,7 @@ body.theme-normal {
   gap: 26px;
   width: 100%;
 }
+
 .method-card {
   display: flex;
   flex-direction: column;
@@ -356,7 +356,6 @@ body.theme-normal {
     0 0 0 7px rgba(150, 90, 170, 0.22),
     0 10px 20px rgba(120, 80, 130, 0.14);
 }
-
 .method-icon {
   display: block;
   width: 50px;
@@ -532,7 +531,6 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   font-weight: 900;
   text-align: center;
 }
-
 .camera-controls {
   display: flex;
   justify-content: center;
@@ -549,6 +547,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   font-size: 14px;
   font-weight: 900;
 }
+
 .quote-title-pill {
   margin-top: 36px;
   margin-bottom: 20px;
@@ -630,7 +629,6 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
     url("images/sky-bg.png") center center / cover no-repeat,
     linear-gradient(to bottom, #9b82ce 0%, #f5bdda 100%);
 }
-
 .analysis-sky {
   display: flex;
   align-items: center;
@@ -649,7 +647,8 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   box-shadow: 0 16px 32px rgba(80, 60, 120, 0.15);
 }
 
-.analysis-quote-pill {
+
+ .analysis-quote-pill {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -659,7 +658,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   margin: 0 auto 14px;
   padding: 10px 16px;
   border-radius: 999px;
-  background: #c08ac8;
+  background: var(--theme-main, #ff6fa8);
   color: #fff;
   font-size: 16px;
   font-weight: 900;
@@ -667,6 +666,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   text-align: center;
   overflow-y: auto;
 }
+
 .analysis-main-star {
   color: var(--theme-main, #ff6fa8);
   font-size: 82px;
@@ -749,7 +749,6 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
 .analysis-star.original {
   color: #9c7ae8;
 }
-
 .analysis-label {
   color: #6d5f77;
   font-size: 13px;
@@ -800,6 +799,8 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   border-radius: 0;
   background: var(--theme-main, #ff6fa8);
 }
+
+/* 星 */
 .my-star,
 .other-star,
 .home-other-star {
@@ -921,6 +922,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
 }
 
+/* ホームの星カード */
 .star-info-card {
   position: absolute;
   left: 18px;
@@ -994,6 +996,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   color: #fff;
 }
 
+/* ホーム下メニュー */
 .home-bar {
   position: absolute;
   left: 14px;
@@ -1032,6 +1035,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   font-weight: 900;
 }
 
+/* つながり */
 .match-list {
   display: flex;
   flex-direction: column;
@@ -1063,6 +1067,7 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   line-height: 1.65;
 }
 
+/* トーク */
 .kirarun-chat-screen {
   display: flex;
   flex-direction: column;
@@ -1248,11 +1253,18 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   font-weight: 900;
 }
 
+/* 過去日記：下が切れないようにスクロール */
+#pastDiaryScreen {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: linear-gradient(to bottom, #8d70c5 0%, #aa8bd4 100%);
+}
+
 .past-calendar-screen {
   position: relative;
   width: 100%;
-  height: 100%;
-  padding: 72px 14px 24px;
+  min-height: 820px;
+  padding: 72px 14px 150px;
   background: linear-gradient(to bottom, #8d70c5 0%, #aa8bd4 100%);
   color: #fff;
 }
@@ -1369,8 +1381,32 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
 .past-calendar-star {
   padding: 0;
   background: transparent;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1;
+  filter:
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 14px currentColor)
+    drop-shadow(0 0 22px currentColor);
+}
+
+.past-calendar-star.pink {
+  color: #ff78b6;
+}
+
+.past-calendar-star.red {
+  color: #ff7a7a;
+}
+
+.past-calendar-star.blue {
+  color: #79d5ff;
+}
+
+.past-calendar-star.green {
+  color: #82e66a;
+}
+
+.past-calendar-star.purple {
+  color: #b58cff;
 }
 
 .past-day-time,
@@ -1400,10 +1436,14 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
 
 .legend-star {
   font-style: normal;
+  filter:
+    drop-shadow(0 0 5px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 10px currentColor);
 }
 
 .past-diary-preview {
   padding: 14px 16px;
+  margin-bottom: 60px;
   border-radius: 22px;
   background: #fff;
   color: #655565;
@@ -1462,4 +1502,80 @@ body.theme-normal .method-card[data-method="camera"] .method-icon {
   font-size: 32px;
   text-align: center;
   line-height: 50px;
+}
+/* ========================================
+   過去日記だけスクロールできるようにする
+======================================== */
+
+#pastDiaryScreen {
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+#pastDiaryScreen.active {
+  display: block;
+  overflow-y: scroll !important;
+}
+
+#pastDiaryScreen .past-calendar-screen {
+  height: auto !important;
+  min-height: 980px !important;
+  padding-bottom: 260px !important;
+  overflow: visible !important;
+}
+
+/* スクロールを邪魔しない */
+#pastDiaryScreen .past-calendar-wrap {
+  touch-action: pan-y;
+}
+
+#pastDiaryScreen .past-diary-preview {
+  margin-bottom: 180px !important;
+}
+/* ========================================
+   過去日記画面だけ、画面全体をスクロール許可
+======================================== */
+
+body.past-scroll-mode {
+  display: block !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  height: auto !important;
+  min-height: 100dvh !important;
+  background: #cfc0e5;
+}
+
+body.past-scroll-mode .app {
+  width: min(100vw, 375px) !important;
+  height: auto !important;
+  min-height: 100dvh !important;
+  max-height: none !important;
+  margin: 0 auto !important;
+  overflow: visible !important;
+}
+
+body.past-scroll-mode .screen {
+  position: absolute;
+  display: none;
+}
+
+body.past-scroll-mode #pastDiaryScreen.active {
+  position: relative !important;
+  display: block !important;
+  height: auto !important;
+  min-height: 100dvh !important;
+  overflow: visible !important;
+}
+
+body.past-scroll-mode #pastDiaryScreen .past-calendar-screen {
+  height: auto !important;
+  min-height: 980px !important;
+  padding-bottom: 260px !important;
+  overflow: visible !important;
+}
+
+body.past-scroll-mode .past-diary-preview {
+  margin-bottom: 180px !important;
 }
