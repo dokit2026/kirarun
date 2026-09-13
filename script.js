@@ -1,3 +1,17 @@
+// Use the device's local date, including across month and year boundaries.
+const openedAt = new Date();
+function pastDateFields(daysAgo, hours, minutes) {
+  const date = new Date(openedAt);
+  date.setDate(date.getDate() - daysAgo);
+  date.setHours(hours, minutes, 0, 0);
+  return {
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
+    time: `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
+    createdAt: date.toISOString()
+  };
+}
+const calendarStart = new Date(openedAt);
+calendarStart.setDate(calendarStart.getDate() - 3);
 const id = (name) => document.getElementById(name);
 const qsa = (selector) => [...document.querySelectorAll(selector)];
 
@@ -13,15 +27,13 @@ const appState = {
   matches: [],
   currentChatMatch: null,
   cameraImageUrl: null,
-  currentPastMonth: new Date(2026, 6, 1),
+  currentPastMonth: new Date(calendarStart.getFullYear(), calendarStart.getMonth(), 1),
   selectedPastDiary: null,
 
   pastDiaries: [
     {
       id: "past-1",
-      date: "2026.7.12",
-      time: "20:14",
-      createdAt: "2026-07-12T20:14:00",
+      ...pastDateFields(3, 20, 14),
       emotion: "happy",
       color: "pink",
       quote: "新しいことに挑戦して、少しだけ自信がついた。",
@@ -30,9 +42,7 @@ const appState = {
     },
     {
       id: "past-2",
-      date: "2026.7.14",
-      time: "22:08",
-      createdAt: "2026-07-14T22:08:00",
+      ...pastDateFields(2, 22, 8),
       emotion: "sad",
       color: "blue",
       quote: "うまくいかなかったけど、ちゃんと頑張った日だった。",
@@ -41,9 +51,7 @@ const appState = {
     },
     {
       id: "past-3",
-      date: "2026.7.16",
-      time: "19:42",
-      createdAt: "2026-07-16T19:42:00",
+      ...pastDateFields(1, 19, 42),
       emotion: "normal",
       color: "green",
       quote: "普通の日の中にも、少し好きな時間があった。",
