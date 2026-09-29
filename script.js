@@ -1,6 +1,25 @@
 const id = (name) => document.getElementById(name);
 const qsa = (selector) => [...document.querySelectorAll(selector)];
 
+function makeSampleDiary(daysAgo, emotion, time, quote, diaryText) {
+  const date = new Date();
+  date.setHours(12, 0, 0, 0);
+  date.setDate(date.getDate() - daysAgo);
+  const [hours, minutes] = time.split(":").map(Number);
+  date.setHours(hours, minutes);
+
+  return {
+    id: `sample-${daysAgo}`,
+    date: `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`,
+    time,
+    createdAt: `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${time}:00`,
+    emotion,
+    color: emotionData[emotion].color,
+    quote,
+    diaryText
+  };
+}
+
 const appState = {
   selectedEmotion: null,
   inputMethod: null,
@@ -13,44 +32,9 @@ const appState = {
   matches: [],
   currentChatMatch: null,
   cameraImageUrl: null,
-  currentPastMonth: new Date(2026, 6, 1),
+  currentPastMonth: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
   selectedPastDiary: null,
-
-  pastDiaries: [
-    {
-      id: "past-1",
-      date: "2026.7.12",
-      time: "20:14",
-      createdAt: "2026-07-12T20:14:00",
-      emotion: "happy",
-      color: "pink",
-      quote: "新しいことに挑戦して、少しだけ自信がついた。",
-      diaryText:
-        "今日は新しいことに挑戦した。最初は不安だったけど、やってみたら意外と楽しくて、少しだけ自信がついた。"
-    },
-    {
-      id: "past-2",
-      date: "2026.7.14",
-      time: "22:08",
-      createdAt: "2026-07-14T22:08:00",
-      emotion: "sad",
-      color: "blue",
-      quote: "うまくいかなかったけど、ちゃんと頑張った日だった。",
-      diaryText:
-        "今日は思ったよりうまくいかなかった。でも、投げ出さずに最後までやったから、ちゃんと頑張った日だったと思う。"
-    },
-    {
-      id: "past-3",
-      date: "2026.7.16",
-      time: "19:42",
-      createdAt: "2026-07-16T19:42:00",
-      emotion: "normal",
-      color: "green",
-      quote: "普通の日の中にも、少し好きな時間があった。",
-      diaryText:
-        "今日は特別なことはなかったけど、帰り道に好きな音楽を聴いた時間がよかった。普通の日の中にも、少し好きな時間があった。"
-    }
-  ]
+  pastDiaries: []
 };
 
 const emotionData = {
@@ -75,6 +59,14 @@ const emotionData = {
     themeClass: "theme-normal"
   }
 };
+
+appState.pastDiaries = [
+  makeSampleDiary(7, "happy", "20:14", "新しいことに挑戦して、少しだけ自信がついた。", "今日は新しいことに挑戦した。最初は不安だったけど、やってみたら意外と楽しくて、少しだけ自信がついた。"),
+  makeSampleDiary(5, "sad", "22:08", "うまくいかなかったけど、ちゃんと頑張った日だった。", "今日は思ったよりうまくいかなかった。でも、投げ出さずに最後までやったから、ちゃんと頑張った日だったと思う。"),
+  makeSampleDiary(3, "normal", "19:42", "普通の日の中にも、少し好きな時間があった。", "今日は特別なことはなかったけど、帰り道に好きな音楽を聴いた時間がよかった。普通の日の中にも、少し好きな時間があった。"),
+  makeSampleDiary(1, "angry", "21:10", "もやもやした気持ちを、言葉にしてみた。", "今日は少し嫌なことがあった。日記に書いたら、自分の気持ちが少し整理できた。")
+];
+
 const otherStars = [
   {
     id: "star-pink-1",
@@ -161,6 +153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderPastCalendar();
 });
+
 function showScreen(screenId) {
   qsa(".screen").forEach((screen) => {
     screen.classList.remove("active");
@@ -244,6 +237,7 @@ function setupEmotionScreen() {
     });
   }
 }
+
 function selectEmotion(card) {
   const emotion = card.dataset.emotion;
 
@@ -336,6 +330,7 @@ function setupDiaryInputScreen() {
     });
   }
 }
+
 function setupCameraScreen() {
   const cameraInput = id("cameraInput");
   const openCameraBtn = id("openCameraBtn");
@@ -408,6 +403,7 @@ function setupCameraScreen() {
     });
   }
 }
+
 function setupQuoteScreen() {
   const nextBtn = id("quoteNextBtn");
 
@@ -522,6 +518,7 @@ function setupTextMarker(box) {
   box.ontouchmove = move;
   document.addEventListener("touchend", end);
 }
+
 function markRange(box, start, end) {
   const min = Math.min(start, end);
   const max = Math.max(start, end);
@@ -622,6 +619,7 @@ function createAnalysis() {
     originalLabel: randomWord
   };
 }
+
 function renderAnalysis() {
   const analysis = appState.analysis;
   if (!analysis) return;
@@ -740,6 +738,7 @@ function renderTutorial() {
     });
   }
 }
+
 function setupHomeScreen() {
   const homeToggleBtn = id("homeToggleBtn");
   const homeBar = id("homeBar");
@@ -895,6 +894,7 @@ function selectOtherStar(star) {
       : "喋ってみたい";
   }
 }
+
 function sendTalkRequest() {
   const star = appState.selectedOtherStar;
 
@@ -1126,6 +1126,16 @@ function renderPastCalendar() {
   const startDay = firstDay.getDay();
   const startDate = new Date(year, month, 1 - startDay);
 
+  // 月初でも、直近1週間の4つの星が同じカレンダー内に見えるようにする。
+  const today = new Date();
+  const isCurrentMonth = year === today.getFullYear() && month === today.getMonth();
+  const oldestSampleDate = new Date(appState.pastDiaries[0].createdAt);
+  const needsExtraWeek = isCurrentMonth && oldestSampleDate < startDate;
+  if (needsExtraWeek) startDate.setDate(startDate.getDate() - 7);
+  const cellCount = needsExtraWeek ? 49 : 42;
+  const wrap = id("pastCalendarWrap");
+  if (wrap) wrap.style.height = needsExtraWeek ? "387px" : "332px";
+
   const monthDiaries = appState.pastDiaries.filter((diary) => {
     const date = new Date(diary.createdAt);
     return date.getFullYear() === year && date.getMonth() === month;
@@ -1137,7 +1147,7 @@ function renderPastCalendar() {
 
   const starPositions = [];
 
-  for (let i = 0; i < 42; i++) {
+  for (let i = 0; i < cellCount; i++) {
     const cellDate = new Date(startDate);
     cellDate.setDate(startDate.getDate() + i);
 
@@ -1154,7 +1164,7 @@ function renderPastCalendar() {
 
     cell.appendChild(number);
 
-    const diary = monthDiaries.find((item) => {
+    const diary = appState.pastDiaries.find((item) => {
       const d = new Date(item.createdAt);
 
       return (
